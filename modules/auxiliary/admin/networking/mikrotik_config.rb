@@ -3,7 +3,6 @@
 # Current source: https://github.com/rapid7/metasploit-framework
 ##
 
-
 class MetasploitModule < Msf::Auxiliary
   include Msf::Auxiliary::Mikrotik
 
@@ -19,8 +18,8 @@ class MetasploitModule < Msf::Auxiliary
         'Author' => ['h00die'],
         'Actions' =>
           [
-            ['ROUTEROS', 'Description' => 'Import RouterOS Config File'],
-            ['SWOS', 'Description' => 'Import SwOS Config File'],
+            ['ROUTEROS', { 'Description' => 'Import RouterOS Config File' }],
+            ['SWOS', { 'Description' => 'Import SwOS Config File' }],
           ],
         'DefaultAction' => 'ROUTEROS'
       )
@@ -33,7 +32,6 @@ class MetasploitModule < Msf::Auxiliary
         Opt::RPORT(22)
       ]
     )
-
   end
 
   def run

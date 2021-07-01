@@ -40,7 +40,11 @@ group :development, :test do
   gem 'rspec-rails', '>= 4.0.2'
 
   gem 'rspec-rerun'
-  gem 'rubocop'
+
+  gem 'rubocop', '>= 1.9.0'
+  gem 'swagger-blocks'
+=======
+
 end
 
 group :test do

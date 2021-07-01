@@ -16,7 +16,6 @@ require 'rex/pescan'
 require 'rex/random_identifier'
 require 'rex/zip'
 require 'rex/powershell'
-require 'rex/payloads/shuffle'
 require 'metasm'
 require 'digest/sha1'
 # Generates a default template
@@ -959,7 +958,7 @@ require 'digest/sha1'
     zip.add_file("#{app_name}/Contents/Resources/", '')
     zip.add_file("#{app_name}/Contents/MacOS/", '')
     # Add the macho and mark it as executable
-    zip.add_file("#{app_name}/Contents/MacOS/#{exe_name}", exe).last.attrs = 0x10
+    zip.add_file("#{app_name}/Contents/MacOS/#{exe_name}", exe).last.attrs = 0o777
     zip.add_file("#{app_name}/Contents/Info.plist", info_plist)
     zip.add_file("#{app_name}/Contents/PkgInfo", 'APPLaplt')
     zip.pack
@@ -1475,6 +1474,16 @@ require 'digest/sha1'
     PYTHON
 
     "exec(__import__('base64').b64decode(__import__('codecs').getencoder('utf-8')('#{Rex::Text.encode_base64(python_code)}')[0]))"
+  end
+
+  def self.to_win32pe_psh_msil(framework, code, opts = {})
+    Rex::Powershell::Payload.to_win32pe_psh_msil(Rex::Powershell::Templates::TEMPLATE_DIR, code)
+  end
+
+  def self.to_win32pe_psh_rc4(framework, code, opts = {})
+    # unlike other to_win32pe_psh_* methods, this expects powershell code, not asm
+    # this method should be called after other to_win32pe_psh_* methods to wrap the output
+    Rex::Powershell::Payload.to_win32pe_psh_rc4(Rex::Powershell::Templates::TEMPLATE_DIR, code)
   end
 
   def self.to_jsp(exe)

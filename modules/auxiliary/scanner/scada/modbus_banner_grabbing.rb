@@ -167,7 +167,7 @@ class MetasploitModule < Msf::Auxiliary
       end
     rescue ::Interrupt
       print_error('MODBUS - Interrupt during payload')
-      raise $!
+      raise $ERROR_INFO
     rescue ::Rex::HostUnreachable, ::Rex::ConnectionError, ::Rex::ConnectionTimeout, ::Rex::ConnectionRefused => e
       print_error("MODBUS - Network error during payload: #{e}")
       return
@@ -175,9 +175,11 @@ class MetasploitModule < Msf::Auxiliary
       print_error('MODBUS - No reply')
       return
     end
+  end
 
-    def cleanup
-      disconnect rescue nil
-    end
+  def cleanup
+    disconnect
+  rescue StandardError
+    nil
   end
 end

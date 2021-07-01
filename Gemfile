@@ -3,8 +3,6 @@ source 'https://rubygems.org'
 #   spec.add_runtime_dependency '<name>', [<version requirements>]
 gemspec name: 'metasploit-framework'
 
-gem 'sqlite3', '~>1.3.0'
-
 # separate from test as simplecov is not run on travis-ci
 group :coverage do
   # code coverage for tests
@@ -13,7 +11,7 @@ end
 
 group :development do
   # Markdown formatting for yard
-  gem 'redcarpet'
+  gem 'redcarpet', '>= 3.5.1'
   # generating documentation
   gem 'yard'
   # for development and testing purposes
@@ -23,7 +21,7 @@ group :development do
   # memory profiling
   gem 'memory_profiler'
   # cpu profiling
-  gem 'ruby-prof'
+  gem 'ruby-prof', '1.4.2'
   # Metasploit::Aggregator external session proxy
   # disabled during 2.5 transition until aggregator is available
   #gem 'metasploit-aggregator'
@@ -38,10 +36,11 @@ group :development, :test do
   gem 'rake'
   # Define `rake spec`.  Must be in development AND test so that its available by default as a rake test when the
   # environment is development
-  gem 'rspec-rails', '>= 4.0.1'
+
+  gem 'rspec-rails', '>= 4.0.2'
+
   gem 'rspec-rerun'
   gem 'rubocop'
-  gem 'swagger-blocks'
 end
 
 group :test do

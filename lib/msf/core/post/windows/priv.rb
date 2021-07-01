@@ -1,8 +1,5 @@
 # -*- coding: binary -*-
 
-require 'msf/core/post/windows/accounts'
-require 'msf/core/post/windows/registry'
-
 module Msf::Post::Windows::Priv
   include ::Msf::Post::Windows::Accounts
   include Msf::Post::Windows::Registry
@@ -25,6 +22,13 @@ module Msf::Post::Windows::Priv
   UAC_PROMPT_CREDS = 3
   UAC_PROMPT_CONSENT = 4
   UAC_DEFAULT = 5
+
+  def initialize(info = {})
+    super(update_info(
+      info,
+      'Compat' => { 'Meterpreter' => { 'Commands' => %w{ stdapi_sys_config_* stdapi_sys_process_* stdapi_registry_* } } }
+    ))
+  end
 
   #
   # Returns true if user is admin and false if not.

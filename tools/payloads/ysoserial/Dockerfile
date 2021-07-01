@@ -11,7 +11,7 @@
 #       You will see warnings, but we're doing our best.  :-)
 
 
-FROM ubuntu:rolling
+FROM ubuntu:groovy-20210614
 
 RUN apt update && apt -y upgrade
 # Dependencies: wget (to download ysoserial)

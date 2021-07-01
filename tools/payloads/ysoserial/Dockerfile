@@ -15,6 +15,7 @@ FROM ubuntu:groovy-20210614
 
 
 
+
 RUN apt update && apt -y upgrade
 # Dependencies: wget (to download ysoserial)
 #               openjdk-8-jre-headless (to execute ysoserial)

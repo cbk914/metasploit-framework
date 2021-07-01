@@ -1,4 +1,5 @@
 
+
 FROM ruby:2.7.3-alpine3.12 AS builder
 
 LABEL maintainer="Rapid7"
@@ -41,6 +42,7 @@ RUN apk add --no-cache \
 
 
 FROM ruby:2.7.3-alpine3.12
+
 
 LABEL maintainer="Rapid7"
 
